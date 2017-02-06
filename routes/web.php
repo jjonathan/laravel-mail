@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +15,14 @@
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('/send', function(Request $request){
+	$email = $request->get('email') ? $request->get('email') : 'jonathan.mmachado@outlook.com';
+	Mail::to($email)->send(new App\Mail\TestMail());
+	return "Yeah! Email sended!";
 });
